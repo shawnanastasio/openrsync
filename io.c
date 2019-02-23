@@ -28,6 +28,7 @@
 #include <unistd.h>
 
 #include "extern.h"
+#include "compat.h"
 
 /*
  * A non-blocking check to see whether there's POLLIN data in fd.

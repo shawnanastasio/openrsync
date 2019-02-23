@@ -33,6 +33,7 @@
 #include <unistd.h>
 
 #include "extern.h"
+#include "compat.h"
 
 enum	pfdt {
 	PFD_SENDER_IN = 0, /* input from the sender */

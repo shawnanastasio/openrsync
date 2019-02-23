@@ -28,6 +28,7 @@
 
 #include "extern.h"
 #include "md4.h"
+#include "compat.h"
 
 /*
  * A request from the receiver to download updated file data.
@@ -87,7 +88,7 @@ send_up_reset(struct send_up *p)
 	p->stat.hint = 0;
 	p->stat.curst = BLKSTAT_NONE;
 
-	/* 
+	/*
 	 * Blow away the hashtable.
 	 * We keep all of the entries separately, so no need to do any
 	 * deallocation here.
@@ -256,7 +257,7 @@ send_up_fsm(struct sess *sess, size_t *phase,
 	} else {
 		assert(up->stat.fd != -1);
 
-		/* 
+		/*
 		 * FIXME: use the nice output of log_file() and so on in
 		 * downloader.c, which means moving this into
 		 * BLKSTAT_DONE instead of having it be here.
@@ -289,7 +290,7 @@ send_up_fsm(struct sess *sess, size_t *phase,
 		for (i = 0; i < up->cur->blks->blksz; i++) {
 			up->stat.mapent[i].blk =
 				&up->cur->blks->blks[i];
-			idx = up->cur->blks->blks[i].chksum_short % 
+			idx = up->cur->blks->blks[i].chksum_short %
 				up->stat.htabsz;
 			TAILQ_INSERT_TAIL
 				(&up->stat.htab[idx],
@@ -322,7 +323,7 @@ send_dl_enqueue(struct sess *sess, struct send_dlq *q,
 	int32_t idx, const struct flist *fl, size_t flsz, int fd)
 {
 	struct send_dl	*s;
-	
+
 	/* End-of-phase marker. */
 
 	if (idx == -1) {
@@ -337,7 +338,7 @@ send_dl_enqueue(struct sess *sess, struct send_dlq *q,
 	}
 
 	/* Validate the index. */
-		
+
 	if (idx < 0 || (uint32_t)idx >= flsz) {
 		ERRX(sess, "file index out of bounds: invalid %"
 			PRId32 " out of %zu", idx, flsz);
@@ -684,7 +685,7 @@ rsync_sender(struct sess *sess, int fdin,
 				pfd[1].fd = fdout;
 				continue;
 			}
-			
+
 			/*
 			 * Non-blocking open of file.
 			 * This will be picked up in the state machine

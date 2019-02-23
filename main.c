@@ -29,6 +29,7 @@
 #include <unistd.h>
 
 #include "extern.h"
+#include "compat.h"
 
 static void
 fargs_free(struct fargs *p)
@@ -249,8 +250,8 @@ fargs_parse(size_t argc, char *argv[], struct opts *opts)
 		    strncasecmp(cp, "rsync://", 8) == 0) {
 			/* rsync://path */
 			cp += 8;
-			
-			/* 
+
+			/*
 			 * FIXME: broken.
 			 * URIs can allow colons too.
 			 * Fix this after merge.
@@ -294,9 +295,12 @@ fargs_parse(size_t argc, char *argv[], struct opts *opts)
 	return f;
 }
 
+void test_seccomp();
+
 int
 main(int argc, char *argv[])
 {
+	test_seccomp();
 	struct opts	 opts;
 	pid_t		 child;
 	int		 fds[2], c, st;

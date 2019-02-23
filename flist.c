@@ -31,6 +31,7 @@
 #include <unistd.h>
 
 #include "extern.h"
+#include "compat.h"
 
 /*
  * We allocate our file list in chunk sizes so as not to do it one by

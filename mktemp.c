@@ -33,6 +33,7 @@
 #include <unistd.h>
 
 #include "extern.h"
+#include "compat.h"
 
 /*
  * The type of temporary files we can create.

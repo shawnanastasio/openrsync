@@ -23,6 +23,7 @@
 #include <string.h>
 
 #include "extern.h"
+#include "compat.h"
 
 #define	RSYNC_PATH	"rsync"
 

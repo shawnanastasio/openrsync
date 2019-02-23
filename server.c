@@ -25,6 +25,7 @@
 #include <unistd.h>
 
 #include "extern.h"
+#include "compat.h"
 
 static int
 fcntl_nonblock(struct sess *sess, int fd)

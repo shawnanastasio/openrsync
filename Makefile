@@ -28,11 +28,22 @@ BINDIR	 = $(PREFIX)/bin
 
 # The -O0 is to help with debugging coredumps.
 CFLAGS	+= -O0 -g -W -Wall -Wextra -Wno-unused-parameter
+LDFLAGS = -lm
+
+# Linux-specific configuration
+ifeq ($(shell uname -s),Linux)
+	# Include the libbsd compatibility library on Linux
+	CFLAGS += $(shell pkg-config --cflags libbsd) -D_GNU_SOURCE
+	LDFLAGS += $(shell pkg-config --libs libbsd)
+
+	# Include the implementation of Linux compatibility wrappers
+	OBJS += linux.o seccomp_broker.o
+endif
 
 all: openrsync
 
 openrsync: $(ALLOBJS)
-	$(CC) -o $@ $(ALLOBJS) -lm
+	$(CC) -o $@ $(ALLOBJS) $(LDFLAGS)
 
 afl: $(AFLS)
 

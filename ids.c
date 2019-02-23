@@ -26,6 +26,7 @@
 #include <unistd.h>
 
 #include "extern.h"
+#include "compat.h"
 
 /*
  * Free a list of struct ident previously allocated with idents_add().

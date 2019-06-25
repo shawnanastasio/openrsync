@@ -132,6 +132,24 @@ recallocarray(void *ptr, size_t oldnmemb, size_t nmemb, size_t size)
 #define SECCOMP_ARG3(ucontext) ((ucontext)->uc_mcontext.gp_regs[PT_R6])
 #define SECCOMP_ARG4(ucontext) ((ucontext)->uc_mcontext.gp_regs[PT_R7])
 #define SECCOMP_ARG5(ucontext) ((ucontext)->uc_mcontext.gp_regs[PT_R8])
+
+#elif defined(__x86_64__)
+
+#define TARGET_AUDIT_ARCH AUDIT_ARCH_X86_64
+
+#define POSITIVE_ERRNO 0
+#define SECCOMP_SET_ERROR(x) (void)(x)
+#define SECCOMP_CLR_ERROR(x) (void)(x)
+
+#define SECCOMP_RET(ucontext) ((ucontext)->uc_mcontext.gregs[REG_RAX])
+#define SECCOMP_SYSNR(ucontext) ((ucontext)->uc_mcontext.gregs[REG_RAX])
+#define SECCOMP_ARG0(ucontext) ((ucontext)->uc_mcontext.gregs[REG_RDI])
+#define SECCOMP_ARG1(ucontext) ((ucontext)->uc_mcontext.gregs[REG_RSI])
+#define SECCOMP_ARG2(ucontext) ((ucontext)->uc_mcontext.gregs[REG_RDX])
+#define SECCOMP_ARG3(ucontext) ((ucontext)->uc_mcontext.gregs[REG_R10])
+#define SECCOMP_ARG4(ucontext) ((ucontext)->uc_mcontext.gregs[REG_R8])
+#define SECCOMP_ARG5(ucontext) ((ucontext)->uc_mcontext.gregs[REG_R9])
+
 #else
 #error "Your architecture isn't known! Add it here"
 #endif
